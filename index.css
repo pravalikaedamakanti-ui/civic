@@ -1,0 +1,111 @@
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #e3f2fd, #f8fbff);
+  color: #333;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 40px;
+  background: linear-gradient(90deg, #0d47a1, #1976d2);
+  color: white;
+}
+
+.navbar .brand {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+  font-weight: 500;
+}
+
+.navbar a:hover {
+  text-decoration: underline;
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 90px 20px;
+}
+
+.hero h1 {
+  font-size: 44px;
+  margin-bottom: 15px;
+  color: #0d47a1;
+}
+
+.hero p {
+  font-size: 18px;
+  max-width: 650px;
+  margin: auto;
+  line-height: 1.6;
+  color: #444;
+}
+
+/* Action Cards */
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding: 50px 20px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: white;
+  width: 300px;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.card h3 {
+  color: #1565c0;
+  margin-bottom: 10px;
+}
+
+.card p {
+  font-size: 15px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.card a {
+  display: inline-block;
+  padding: 10px 20px;
+  background: linear-gradient(90deg, #1565c0, #1e88e5);
+  color: white;
+  border-radius: 25px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.card a:hover {
+  background: linear-gradient(90deg, #0d47a1, #1565c0);
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 18px;
+  background: #e3f2fd;
+  font-size: 14px;
+  color: #555;
+}

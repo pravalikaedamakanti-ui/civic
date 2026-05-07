@@ -1,0 +1,70 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background-color: #f5f8fa;
+}
+
+/* Navbar (same as report.css) */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+}
+
+.navbar .logo {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.navbar .brand {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.navbar-right a {
+  color: #fff;
+  margin-left: 15px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.navbar-right a:hover {
+  text-decoration: underline;
+}
+
+/* Container */
+.container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+/* Issue cards */
+.issue-card {
+  background-color: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.issue-card h3 {
+  margin-top: 0;
+  color: #007bff;
+}
+
+.issue-card p {
+  margin: 5px 0;
+  color: #333;
+}
+
+.issue-card img {
+  margin-top: 10px;
+  border-radius: 8px;
+  max-width: 100%;
+  height: auto;
+  display: block;
+}

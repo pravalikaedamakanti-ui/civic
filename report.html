@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Report Issue | Civic Watch</title>
+<link rel="stylesheet" href="css/report.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-left">
+    <img src="logo.jpg" alt="Logo" class="logo">
+    <span class="brand">Civic Watch</span>
+  </div>
+  <div class="navbar-right">
+    <a href="index.html">Home</a>
+    <a href="contact.html">Contact Us</a>
+    <a href="issues.html">Reported Issues</a>
+  </div>
+</nav>
+
+<div class="container">
+  <h2>Report an Issue</h2>
+  <form id="reportForm" enctype="multipart/form-data">
+    <input type="text" name="name" placeholder="Name (optional)">
+    <input type="text" name="phone" placeholder="Phone (optional)">
+    <input type="text" name="address" placeholder="Address" required>
+    <textarea name="description" placeholder="Describe the issue" required></textarea>
+
+    <!-- Dropdown for issue type -->
+    <select name="type" required>
+      <option value="">Select Issue Type</option>
+      <option value="Road Damage">Road Damage</option>
+      <option value="Garbage">Garbage</option>
+      <option value="Street Light">Street Light</option>
+      <option value="Water Supply">Water Supply</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <!-- Image upload -->
+    <label>Attach Image (optional)</label>
+    <input type="file" name="image" accept="image/*">
+
+    <!-- Live capture button -->
+    <button type="button" id="captureBtn">Capture Live Image</button>
+    <video id="video" width="320" height="240" autoplay style="display:none;"></video>
+    <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
+
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+<script>
+const form = document.getElementById("reportForm");
+const captureBtn = document.getElementById("captureBtn");
+const video = document.getElementById("video");
+const canvas = document.getElementById("canvas");
+
+let capturedFile = null;
+
+// Live capture
+captureBtn.addEventListener("click", async () => {
+  video.style.display = "block";
+  const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+  video.srcObject = stream;
+
+  captureBtn.textContent = "Capturing in 3s...";
+
+  setTimeout(() => {
+    const context = canvas.getContext("2d");
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    canvas.toBlob(blob => {
+      capturedFile = new File([blob], "capture.png", { type: "image/png" });
+    }, "image/png");
+
+    video.srcObject.getTracks().forEach(track => track.stop());
+    video.style.display = "none";
+    canvas.style.display = "block";
+    captureBtn.textContent = "Capture Live Image (again)";
+  }, 3000);
+});
+
+// Form submit
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const formData = new FormData(form);
+
+  if (capturedFile) formData.set("image", capturedFile);
+
+  console.log("FormData entries:");
+  for (let pair of formData.entries()) {
+    console.log(pair[0], pair[1]);
+  }
+
+  try {
+    const response = await fetch("/issues", { method: "POST", body: formData });
+    const result = await response.json();
+    console.log("Result from backend:", result);
+  
+
+
+    if (response.ok && result.success) {
+      window.location.href = "success.html";
+    } else {
+      alert("Failed: " + (result.error || "Unknown error"));
+      console.error("Backend error:", result);
+    }
+
+  } catch (err) {
+    console.error("Submit error:", err);
+    alert("Error submitting issue. Check console.");
+  }
+});
+</script>
+
+
+</body>
+</html>

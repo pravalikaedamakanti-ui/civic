@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reported Issues | Civic Watch</title>
+<link rel="stylesheet" href="css/issues.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-left">
+    <img src="logo.jpg" alt="Logo" class="logo">
+    <span class="brand">Civic Watch</span>
+  </div>
+  <div class="navbar-right">
+    <a href="index.html">Home</a>
+    <a href="contact.html">Contact Us</a>
+    <a href="report.html">Report Issue</a>
+  </div>
+</nav>
+
+<div class="container">
+  <h2>Reported Issues</h2>
+  <div id="issuesContainer"></div>
+</div>
+
+<script>
+async function fetchIssues() {
+  const container = document.getElementById("issuesContainer");
+  container.innerHTML = "<p>Loading...</p>";
+
+  try {
+    const response = await fetch("/issues");
+    const issues = await response.json();
+
+    if (issues.length === 0) {
+      container.innerHTML = "<p>No issues reported yet.</p>";
+      return;
+    }
+
+    container.innerHTML = issues.map(issue => `
+      <div class="issue-card">
+        <h3>${issue.type} - ${issue.address}</h3>
+        <p><strong>Name:</strong> ${issue.name || "Anonymous"}</p>
+        <p><strong>Phone:</strong> ${issue.phone || "N/A"}</p>
+        <p><strong>Description:</strong> ${issue.description}</p>
+        ${issue.image ? `<img src="${issue.image}" width="200">` : ""}
+        <hr>
+      </div>
+    `).join("");
+
+  } catch (err) {
+    console.error("Fetch issues error:", err);
+    container.innerHTML = "<p>Error loading issues.</p>";
+  }
+}
+
+fetchIssues();
+</script>
+
+</body>
+</html>
